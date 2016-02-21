@@ -1,5 +1,5 @@
 /*
-    FreeRTOS V8.2.3 - Copyright (C) 2015 Real Time Engineers Ltd.
+    FreeRTOS V8.2.1 - Copyright (C) 2015 Real Time Engineers Ltd.
     All rights reserved
 
     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
@@ -8,7 +8,7 @@
 
     FreeRTOS is free software; you can redistribute it and/or modify it under
     the terms of the GNU General Public License (version 2) as published by the
-    Free Software Foundation >>>> AND MODIFIED BY <<<< the FreeRTOS exception.
+    Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
 
     ***************************************************************************
     >>!   NOTE: The modification to the GPL is included to allow you to     !<<
@@ -85,11 +85,11 @@
 #define configUSE_PREEMPTION 1
 #define configUSE_IDLE_HOOK 0
 #define configUSE_TICK_HOOK 0
-#define configCPU_CLOCK_HZ (SystemCoreClock)
+#define configCPU_CLOCK_HZ (96000000UL)
 #define configTICK_RATE_HZ ((TickType_t)1000)
-#define configMAX_PRIORITIES (5)
+#define configMAX_PRIORITIES (18)
 #define configMINIMAL_STACK_SIZE ((unsigned short)90)
-#define configTOTAL_HEAP_SIZE ((size_t)(10 * 1024))
+#define configTOTAL_HEAP_SIZE ((size_t)(24 * 1024))
 #define configMAX_TASK_NAME_LEN (10)
 #define configUSE_TRACE_FACILITY 1
 #define configUSE_16_BIT_TICKS 0
@@ -101,8 +101,8 @@
 #define configUSE_MALLOC_FAILED_HOOK 0
 #define configUSE_APPLICATION_TASK_TAG 0
 #define configUSE_COUNTING_SEMAPHORES 1
-#define configGENERATE_RUN_TIME_STATS 0
 #define configUSE_TIME_SLICING 0
+//#define configUSE_TASK_FPU_SUPPORT 1
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 0
@@ -110,7 +110,7 @@
 
 /* Software timer definitions. */
 #define configUSE_TIMERS 1
-#define configTIMER_TASK_PRIORITY (2)
+#define configTIMER_TASK_PRIORITY (17)
 #define configTIMER_QUEUE_LENGTH 10
 #define configTIMER_TASK_STACK_DEPTH (configMINIMAL_STACK_SIZE * 2)
 
@@ -123,6 +123,23 @@ to exclude the API function. */
 #define INCLUDE_vTaskSuspend 1
 #define INCLUDE_vTaskDelayUntil 1
 #define INCLUDE_vTaskDelay 1
+
+/* This demo makes use of one or more example stats formatting functions.  These
+format the raw data provided by the uxTaskGetSystemState() function in to human
+readable ASCII form.  See the notes in the implementation of vTaskList() within
+FreeRTOS/Source/tasks.c for limitations. */
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1
+
+/* Run time stats gathering definitions. */
+#ifdef __ICCARM__
+/* The #ifdef just prevents this C specific syntax from being included in
+assembly files. */
+void vMainConfigureTimerForRunTimeStats(void);
+unsigned long ulMainGetRunTimeCounterValue(void);
+#endif
+#define configGENERATE_RUN_TIME_STATS 0
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() // vMainConfigureTimerForRunTimeStats()
+#define portGET_RUN_TIME_COUNTER_VALUE()         // ulMainGetRunTimeCounterValue()
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS

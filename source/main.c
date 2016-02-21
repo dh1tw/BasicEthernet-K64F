@@ -43,9 +43,6 @@
 #include "lwip/dhcp.h"
 #include "lwip/api.h"
 
-
-
-
 #include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"

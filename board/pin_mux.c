@@ -28,26 +28,60 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "fsl_device_registers.h"
+#include "fsl_common.h"
 #include "fsl_port.h"
 #include "pin_mux.h"
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/*!
- * @brief Initialize all pins used in this example
- *
- * @param disablePortClockAfterInit disable port clock after pin
- * initialization or not.
- */
 void BOARD_InitPins(void)
 {
-    /* Initialize UART1 pins below */
+    port_pin_config_t configENET = {0};
+
+    /* Initialize UART0 pins below */
+    /* Ungate the port clock */
     /* Ungate the port clock */
     CLOCK_EnableClock(kCLOCK_PortB);
     /* Affects PORTB_PCR16 register */
     PORT_SetPinMux(PORTB, 16u, kPORT_MuxAlt3);
     /* Affects PORTB_PCR17 register */
     PORT_SetPinMux(PORTB, 17u, kPORT_MuxAlt3);
+
+    CLOCK_EnableClock(kCLOCK_PortC);
+    /* Affects PORTC_PCR16 register */
+    PORT_SetPinMux(PORTC, 16u, kPORT_MuxAlt4);
+    /* Affects PORTC_PCR17 register */
+    PORT_SetPinMux(PORTC, 17u, kPORT_MuxAlt4);
+    /* Affects PORTC_PCR18 register */
+    PORT_SetPinMux(PORTC, 18u, kPORT_MuxAlt4);
+    /* Affects PORTC_PCR19 register */
+    PORT_SetPinMux(PORTC, 19u, kPORT_MuxAlt4);
+    /* Affects PORTB_PCR1 register */
+    PORT_SetPinMux(PORTB, 1u, kPORT_MuxAlt4);
+
+    configENET.openDrainEnable = kPORT_OpenDrainEnable;
+    configENET.mux = kPORT_MuxAlt4;
+    configENET.pullSelect = kPORT_PullUp;
+    /* Ungate the port clock */
+    CLOCK_EnableClock(kCLOCK_PortA);
+    /* Affects PORTB_PCR0 register */
+    PORT_SetPinConfig(PORTB, 0u, &configENET);
+
+    /* Affects PORTA_PCR13 register */
+    PORT_SetPinMux(PORTA, 13u, kPORT_MuxAlt4);
+    /* Affects PORTA_PCR12 register */
+    PORT_SetPinMux(PORTA, 12u, kPORT_MuxAlt4);
+    /* Affects PORTA_PCR14 register */
+    PORT_SetPinMux(PORTA, 14u, kPORT_MuxAlt4);
+    /* Affects PORTA_PCR5 register */
+    PORT_SetPinMux(PORTA, 5u, kPORT_MuxAlt4);
+    /* Affects PORTA_PCR16 register */
+    PORT_SetPinMux(PORTA, 16u, kPORT_MuxAlt4);
+    /* Affects PORTA_PCR17 register */
+    PORT_SetPinMux(PORTA, 17u, kPORT_MuxAlt4);
+    /* Affects PORTA_PCR15 register */
+    PORT_SetPinMux(PORTA, 15u, kPORT_MuxAlt4);
+    /* Affects PORTA_PCR28 register */
+    PORT_SetPinMux(PORTA, 28u, kPORT_MuxAlt4);
 }
